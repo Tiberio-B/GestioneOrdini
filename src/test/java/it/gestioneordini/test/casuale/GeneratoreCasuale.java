@@ -37,7 +37,7 @@ public class GeneratoreCasuale extends Random {
 		return (nextInt(max - min + 1) + min);
 	}
 
-	boolean coinFlip() {
+	public boolean coinFlip() {
 		return (nextInt(2) > 0) ? true : false;
 	}
 

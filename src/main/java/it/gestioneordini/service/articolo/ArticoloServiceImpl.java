@@ -18,21 +18,12 @@ public class ArticoloServiceImpl extends GenericServiceImpl<Articolo> implements
 			entityManager.getTransaction().begin();
 			ArticoloDAO dao = (ArticoloDAO) getDAO();
 			dao.setEntityManager(entityManager);
-			
-			// Alberto fa così:
+
 			articolo = entityManager.merge(articolo);
 			categoria = entityManager.merge(categoria);
 			
-			// Io farei con i Service:
-			// aggiorna(articolo); 
-			// MyServiceFactory.getCategoriaServiceInstance().aggiorna(categoria);
-						
-			// Oppure con i DAO:
-			// dao.update(articolo);
-			// MyDAOFactory.getCategoriaDAOInstance().update(categoria);
-			
 			articolo.getCategorie().add(categoria); // eseguo l'operazione lato Java
-			// categoria.getArticoli().add(articolo) // anche dal lato opposto
+			categoria.getArticoli().add(articolo); // anche dal lato opposto
 			
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {
@@ -50,17 +41,11 @@ public class ArticoloServiceImpl extends GenericServiceImpl<Articolo> implements
 			ArticoloDAO dao = (ArticoloDAO) getDAO();
 			dao.setEntityManager(entityManager);
 			
-			// Alberto faceva così:
 			articolo = entityManager.merge(articolo);
 			ordine = entityManager.merge(ordine);
 			
-			// aggiorna(articolo); // recupero l'articolo effettivo/aggiornato lato db
-			
-			// MyServiceFactory.getCategoriaServiceInstance().aggiorna(categoria);
-			
 			articolo.setOrdine(ordine); // eseguo l'operazione lato Java
-			
-			// dao.update(articolo); // la consistenza lato db viene mantenuta automaticamente
+			ordine.getArticoli().add(articolo); // anche dal lato opposto
 			
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {

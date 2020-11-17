@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 
 import it.gestioneordini.dao.EntityManagerUtil;
+import it.gestioneordini.dao.IBaseDAO;
 import it.gestioneordini.dao.MyDAOFactory;
 import it.gestioneordini.dao.articolo.ArticoloDAO;
 import it.gestioneordini.dao.categoria.CategoriaDAO;
@@ -65,26 +66,14 @@ public class CategoriaServiceImpl extends GenericServiceImpl<Categoria> implemen
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
-			CategoriaDAO dao = (CategoriaDAO) getDAO();
+			IBaseDAO<Categoria> dao = getDAO();
 			dao.setEntityManager(entityManager);
 			
-			// Alberto fa così:
-			entityManager.merge(articolo); // recupero l'articolo effettivo/aggiornato lato db
-			entityManager.merge(categoria); // recupero la categoria effettiva/aggiornata lato db
-			
-			// Io farei con i Service:
-			// aggiorna(categoria); 
-			// MyServiceFactory.getArticoloServiceInstance().aggiorna(articolo);
-			
-			// Oppure con i DAO:
-			// dao.update(categoria);
-			// MyServiceFactory.getArticoloServiceInstance().getDao().update(articolo);
+			articolo = entityManager.merge(articolo); // recupero l'articolo effettivo/aggiornato lato db
+			categoria = entityManager.merge(categoria); // recupero la categoria effettiva/aggiornata lato db
 	
-			// categoria.getArticoli().add(articolo); // eseguo l'operazione lato Java	
-			// articolo.getCategorie().add(categoria); // anche dal lato opposto
-			
-			entityManager.merge(categoria);
-			entityManager.merge(articolo);
+			categoria.getArticoli().add(articolo); // eseguo l'operazione lato Java	
+			articolo.getCategorie().add(categoria); // anche dal lato opposto
 			
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import it.gestioneordini.dao.EntityManagerUtil;
+import it.gestioneordini.dao.IBaseDAO;
 import it.gestioneordini.dao.ordine.OrdineDAO;
 import it.gestioneordini.model.Articolo;
 import it.gestioneordini.model.Categoria;
@@ -36,23 +37,15 @@ public class OrdineServiceImpl extends GenericServiceImpl<Ordine> implements Ord
 		EntityManager entityManager = EntityManagerUtil.getEntityManager();
 		try {
 			entityManager.getTransaction().begin();
-			OrdineDAO dao = (OrdineDAO) getDAO();
+			IBaseDAO<Ordine> dao = getDAO();
 			dao.setEntityManager(entityManager);
 			
-			// Alberto fa così:
+	
 			articolo = entityManager.merge(articolo); // recupero l'articolo effettivo/aggiornato lato db
 			ordine = entityManager.merge(ordine); // recupero l'ordine effettivo/aggiornato lato db
-			
-			// Io farei con i Service:
-			// aggiorna(ordine); 
-			// MyServiceFactory.getArticoloServiceInstance().aggiorna(articolo);
-			
-			// Oppure con i DAO:
-			// dao.update(ordine);
-			// MyDAOFactory.getArticoloDAOInstance().update(articolo);
 		
-			// ordine.getArticoli().add(articolo); // eseguo l'operazione lato Java
-			// articolo.setOrdine(ordine); // anche dal lato opposto
+			ordine.getArticoli().add(articolo); // eseguo l'operazione lato Java
+			articolo.setOrdine(ordine); // anche dal lato opposto
 			
 			entityManager.getTransaction().commit();
 		} catch (Exception e) {

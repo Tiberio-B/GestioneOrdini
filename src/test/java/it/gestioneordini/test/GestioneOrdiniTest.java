@@ -75,7 +75,10 @@ public class GestioneOrdiniTest {
 		for (int j = 0; j < numOrdinativi; j++) {
 			Articolo articolo = r.articoloCasuale();
 			Ordine ordine = r.ordineCasuale();
-			articolo.addOrdine(ordine);
+			if (r.coinFlip()) {
+				articolo.addOrdine(ordine);
+			}
+			else { ordine.addArticolo(articolo); }
 		}
 	}
 	
@@ -83,7 +86,10 @@ public class GestioneOrdiniTest {
 		for (int k = 0; k < numCategorizzazioni; k++) {
 			Articolo articolo = r.articoloCasuale();
 			Categoria categoria = r.categoriaCasuale();
-			articolo.addCategoria(categoria);
+			if (r.coinFlip()) {
+				articolo.addCategoria(categoria);
+			}
+			else { categoria.addArticolo(articolo); }
 		}
 	}
 	
@@ -142,7 +148,7 @@ public class GestioneOrdiniTest {
 			
 			// valoreCategoriaCasuale(); // query per casa no#3
 			
-			feedback(); // stampa a schermo tutti i records nel DB
+			// feedback(); // stampa a schermo tutti i records nel DB
 			
 		} catch (Exception e) {
 			e.printStackTrace();
