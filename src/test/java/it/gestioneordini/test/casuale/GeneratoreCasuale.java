@@ -114,25 +114,4 @@ public class GeneratoreCasuale extends Random {
 	public String nomeArticolo() {
 		return elementoCasuale(LoremIpsum.CVCVCVCV);
 	}
-	
-	/*
-	 * int coinFlip() { return nextInt(2); }
-	 * 
-	 * Valutatore valutatoreCasuale(Ufficio ufficio) { Genere genere =
-	 * genereCasuale(); String nome = nomeCasuale(genere); String cognome =
-	 * cognomeCasuale(); Date ddn = ddnCasuale(); return new Valutatore(nome,
-	 * cognome, ddn, genere, ufficio); }
-	 * 
-	 * Dipendente dipendenteCasuale(Ufficio ufficio) { Genere genere =
-	 * genereCasuale(); String nome = nomeCasuale(genere); String cognome =
-	 * cognomeCasuale(); Date ddn = ddnCasuale(); return new Dipendente(nome,
-	 * cognome, ddn, genere, ufficio); }
-	 * 
-	 * Valutazione valutazioneCasuale(Date data, Dipendente dip) { return new
-	 * Valutazione(data, dip, nextInt(6), nextInt(6), nextInt(6)); }
-	 * 
-	 * Genere genereCasuale() { switch (nextInt(3)) { case 0: return Genere.M; case
-	 * 1: return Genere.F; } return Genere.NB; }
-	 * 
-	 */
 }

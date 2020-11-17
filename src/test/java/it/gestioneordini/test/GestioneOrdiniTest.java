@@ -75,19 +75,7 @@ public class GestioneOrdiniTest {
 		for (int j = 0; j < numOrdinativi; j++) {
 			Articolo articolo = r.articoloCasuale();
 			Ordine ordine = r.ordineCasuale();
-			// Hibernate.initialize(ord.getArticoli());
-			// stampa(articolo);
-			// stampa(ordine);
-			ordine.addArticolo(articolo);
-			// ordineService.carica(ordine.getId());
-			
-//			for (Articolo a : ordine.getArticoli()) {
-//				stampa(a);
-//			}
-			// stampa(articolo);
-			// stampa(ordine);
-			ordineService.aggiorna(ordine);
-			articoloService.aggiorna(articolo);
+			articolo.addOrdine(ordine);
 		}
 	}
 	
@@ -95,14 +83,7 @@ public class GestioneOrdiniTest {
 		for (int k = 0; k < numCategorizzazioni; k++) {
 			Articolo articolo = r.articoloCasuale();
 			Categoria categoria = r.categoriaCasuale();
-			// stampa(articolo);
-			// stampa(categoria);
-			categoria.addArticolo(articolo);
-			
-			// stampa(articolo);
-			// stampa(categoria);
-			categoriaService.aggiorna(categoria);
-			articoloService.aggiorna(articolo);	
+			articolo.addCategoria(categoria);
 		}
 	}
 	
@@ -149,13 +130,11 @@ public class GestioneOrdiniTest {
 		
 		try {
 		
-			// init(numArticoli, numOrdini, numCategorie); // inizializza tutte le tabelle
+			init(numArticoli, numOrdini, numCategorie); // inizializza tutte le tabelle
+			
+			doCategorizzazioni(numCategorizzazioni); // collega Categorie e Articoli
 			
 			doOrdinativi(numOrdinativi); // collega Ordini e Articoli
-			
-			
-			
-			// doCategorizzazioni(numCategorizzazioni); // collega Categorie e Articoli
 			
 			// getOrdiniFromCategoriaCasuale(); // query per casa no#1
 			
@@ -163,7 +142,7 @@ public class GestioneOrdiniTest {
 			
 			// valoreCategoriaCasuale(); // query per casa no#3
 			
-			// feedback(); // stampa a schermo tutti i records nel DB
+			feedback(); // stampa a schermo tutti i records nel DB
 			
 		} catch (Exception e) {
 			e.printStackTrace();

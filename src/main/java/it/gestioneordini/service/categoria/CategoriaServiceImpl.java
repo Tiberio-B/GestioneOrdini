@@ -43,7 +43,7 @@ public class CategoriaServiceImpl extends GenericServiceImpl<Categoria> implemen
 			ArticoloDAO adao = MyDAOFactory.getArticoloDAOInstance();
 			adao.setEntityManager(entityManager);
 			
-			// select sum(a.prezzo) from Articolo a join a.categorie c there c.id = :categoriaId, Double.class
+			// sarebbe meglio una query tipo "select sum(a.prezzo) from Articolo a join a.categorie c there c.id = :categoriaId, Double.class"
 			
 			List<Articolo> articoliPresenti = adao.findBy(input);
 			for (Articolo articoloPresente : articoliPresenti) {
@@ -79,16 +79,9 @@ public class CategoriaServiceImpl extends GenericServiceImpl<Categoria> implemen
 			// Oppure con i DAO:
 			// dao.update(categoria);
 			// MyServiceFactory.getArticoloServiceInstance().getDao().update(articolo);
-
-			// eseguo l'operazione lato Java		
-			Set<Articolo> artInCategoria = categoria.getArticoli();
-			artInCategoria.add(articolo);
-			categoria.setArticoli(artInCategoria);
-			
-			// anche dal lato opposto
-			Set<Categoria> catInArticolo = articolo.getCategorie();
-			catInArticolo.add(categoria);
-			articolo.setCategorie(catInArticolo);
+	
+			// categoria.getArticoli().add(articolo); // eseguo l'operazione lato Java	
+			// articolo.getCategorie().add(categoria); // anche dal lato opposto
 			
 			entityManager.merge(categoria);
 			entityManager.merge(articolo);

@@ -109,4 +109,9 @@ public class Articolo {
 		}
 		return false;
 	}
+
+	public void addOrdine(Ordine ordine) throws Exception {
+		MyServiceFactory.getArticoloServiceInstance().aggiungi(this, ordine);
+		
+	}
 }
